@@ -1,0 +1,13 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'spec/meta/**/*'
+    - 'spec/student/**/*'
+
+Layout/LineLength:
+  Max: 100
