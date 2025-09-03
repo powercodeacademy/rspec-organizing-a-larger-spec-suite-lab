@@ -1,16 +1,12 @@
 # frozen_string_literal: true
-
-RSpec.shared_examples "a card-like object" do 
-  it "responds to #to_s" do 
-    expect(subject).to respond_to(:to_s) 
-  end
-end
-
+require_relative 'shared_examples_spec'
 
 describe(Card) do
-  context("card is an ace") do 
-    subject { Card.new("Hearts", "A") }
+  subject { Card.new("Hearts", "A") }
 
+  it_behaves_like "a printable object"
+
+  context("card is an ace") do 
     it "has a rank of 'A'" do 
       expect(subject.ace?).to be(true)
     end
