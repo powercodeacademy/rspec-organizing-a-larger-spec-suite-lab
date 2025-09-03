@@ -13,4 +13,9 @@ describe Card do
       expect(matching_card).to include(["Spades", "A"])
     end
   end
+
+  it "has a suit and rank" do
+    expect(card.suit).to be_a(String)
+    expect(card.rank).to be_a(String)
+  end
 end

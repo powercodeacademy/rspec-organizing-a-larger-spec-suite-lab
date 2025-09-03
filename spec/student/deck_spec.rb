@@ -13,4 +13,8 @@ describe Deck do
        expect(deck.empty?).to be true
      end
    end
+
+   it "starts with 52 cards" do
+    expect(deck.size).to eq(52)
+  end
 end
