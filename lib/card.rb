@@ -9,6 +9,7 @@ class Card
   def initialize(suit, rank)
     raise ArgumentError, 'Invalid suit' unless SUITS.include?(suit)
     raise ArgumentError, 'Invalid rank' unless RANKS.include?(rank)
+
     @suit = suit
     @rank = rank
   end
@@ -24,6 +25,7 @@ class Card
   def value
     return 11 if ace?
     return 10 if face_card?
+
     @rank.to_i
   end
 
