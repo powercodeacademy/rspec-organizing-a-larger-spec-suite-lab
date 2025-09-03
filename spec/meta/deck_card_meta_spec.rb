@@ -4,7 +4,7 @@ describe '[LAB CHECKER] Deck and Card Organization Spec Requirements' do
   files = Dir[File.expand_path('../../student/*_spec.rb', __FILE__)]
 
   it 'has at least one student spec file in spec/student/' do
-    expect(files.any?).to be true, 'Expected at least one spec file in spec/student/'
+    expect(files).not_to be_empty
   end
 
   files.each do |file|
