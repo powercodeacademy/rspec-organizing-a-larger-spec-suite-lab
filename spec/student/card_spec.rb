@@ -1,11 +1,5 @@
 # frozen_string_literal: true
-
-RSpec.shared_examples "a valid card" do
-  it "has a suit and rank" do
-    expect(card.suit).to be_a(String)
-    expect(card.rank).to be_a(String)
-  end
-end
+require_relative 'shared_examples'
 
 describe Card do
   subject(:deck) { Deck.new }
