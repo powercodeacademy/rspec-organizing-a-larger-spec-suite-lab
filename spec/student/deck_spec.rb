@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "a valid card" do
+RSpec.shared_examples "a fresh deck deck" do
   it "starts with 52 cards" do
     expect(deck.size).to eq(52)
   end
@@ -10,9 +10,7 @@ describe Deck do
   subject(:deck) { Deck.new }
   let(:card) { Card.new("Spade", "A") }
 
-  it "starts with 52 cards" do
-    expect(deck.size).to eq(52)
-  end
+  it_behaves_like "a fresh deck deck"
 
   context ("when empty") do
      it "has no cards" do

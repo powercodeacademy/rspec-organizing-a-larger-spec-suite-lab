@@ -11,10 +11,7 @@ describe Card do
   subject(:deck) { Deck.new }
   let(:card) { Card.new("Spades", "A") }
 
-  it "is a valid card" do
-    expect(card.rank).to eq("A")
-    expect(card.suit).to eq("Spades")
-  end
+  it_behaves_like "a valid card"
 
   context ("has cards") do
     it "has an Ace of Spade in the deck" do
