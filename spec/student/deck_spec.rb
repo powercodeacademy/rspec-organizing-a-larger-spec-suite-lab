@@ -1,4 +1,3 @@
-# spec/student/deck_spec.rb
 # frozen_string_literal: true
 
 require_relative '../../lib/deck'
