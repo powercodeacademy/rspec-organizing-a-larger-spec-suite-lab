@@ -1,24 +1,23 @@
 # frozen_string_literal: true
 
 describe Card do
-  it 'creates a card with valid suit and rank' do
-    card = Card.new('Hearts', 'A')
-    expect(card.suit).to eq('Hearts')
-    expect(card.rank).to eq('A')
-  end
+  let(:suit) {"Diamonds"}
+  let(:rank) { "A" }
+  subject(:card) { Card.new(suit, rank) }
 
-  it 'creates another card with valid suit and rank' do
-    card = Card.new('Diamonds', 'K')
-    expect(card.suit).to eq('Diamonds')
-    expect(card.rank).to eq('K')
+  shared_examples "a valid card" do |suit, rank|
+  it "created suit and rank" do
+    card = Card.new(suit, rank)
+    expect(card.suit).to eq(suit)
+    expect(card.rank).to eq(rank)
   end
+end
 
-  it 'creates a third card with valid suit and rank' do
-    card = Card.new('Clubs', '10')
-    expect(card.suit).to eq('Clubs')
-    expect(card.rank).to eq('10')
-  end
+  it_behaves_like 'a valid card', 'Hearts', 'A'
+  it_behaves_like 'a valid card', 'Diamonds', 'K'
+  it_behaves_like 'a valid card', 'Clubs', '10'
 
+context('invalid suit or rank ') do
   it 'raises error for invalid suit' do
     expect { Card.new('InvalidSuit', 'A') }.to raise_error(ArgumentError, 'Invalid suit')
   end
@@ -34,6 +33,7 @@ describe Card do
   it 'raises error for another invalid rank' do
     expect { Card.new('Spades', 'NotARank') }.to raise_error(ArgumentError, 'Invalid rank')
   end
+end
 
   it 'identifies jack as face card' do
     card = Card.new('Hearts', 'J')

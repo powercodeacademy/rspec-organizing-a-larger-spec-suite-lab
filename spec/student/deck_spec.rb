@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 describe Deck do
-  subject { Deck.new}
+let (:deck) { Deck.new}
 
+context("deck empty")
   it 'creates a deck with 52 cards' do
     expect(subject.size).to eq(52)
   end
@@ -10,6 +11,7 @@ describe Deck do
   it 'creates another deck with 52 cards' do
     expect(subject.size).to eq(52)
   end
+end
 
   it 'creates a full deck that is not empty' do
     expect(subject.empty?).to be false
@@ -115,35 +117,34 @@ describe Deck do
     expect(subject.size).to eq(original_size - 10)
   end
 
-  it 'becomes empty after drawing all cards' do
+shared_examples "deck of empty cards" do
+  before(:each) do
     52.times { subject.draw }
+  end
+  it 'becomes empty after drawing all cards' do
     expect(subject.empty?).to be true
   end
 
   it 'is empty after drawing all 52 cards' do
-    52.times { subject.draw }
     expect(subject.empty?).to be true
   end
 
   it 'has size 0 when empty' do
-    52.times { subject.draw }
     expect(subject.size).to eq(0)
   end
 
   it 'reports size as 0 when all cards drawn' do
-    52.times { subject.draw }
     expect(subject.size).to eq(0)
   end
 
   it 'returns nil when drawing from empty deck' do
-    52.times { subject.draw }
     expect(subject.draw).to be_nil
   end
 
   it 'gives nil when trying to draw from empty deck' do
-    52.times { subject.draw }
     expect(subject.draw).to be_nil
   end
+end
 
   it 'can shuffle the deck' do
     original_order = subject.cards.dup
