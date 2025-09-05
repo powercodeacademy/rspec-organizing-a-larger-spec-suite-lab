@@ -1,23 +1,19 @@
-# frozen_string_literal: true
-
 describe Deck do
+  let(:deck) { Deck.new }
   it 'creates a deck with 52 cards' do
     2.times do
-      deck = Deck.new
       expect(deck.size).to eq(52)
     end
   end
 
   it 'creates a full deck that is not empty' do
     2.times do
-      deck = Deck.new
       expect(deck.empty?).to be false
     end
   end
 
   it 'has all four suits in new deck' do
     2.times do
-      deck = Deck.new
       suits = deck.cards.map(&:suit).uniq.sort
       expect(suits).to eq(['Clubs', 'Diamonds', 'Hearts', 'Spades'])
     end
@@ -25,7 +21,6 @@ describe Deck do
 
   it 'has all thirteen ranks in new deck' do
     2.times do
-      deck = Deck.new
       ranks = deck.cards.map(&:rank).uniq.sort_by { |rank| Card::RANKS.index(rank) }
       expect(ranks).to eq(['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'])
     end
@@ -33,7 +28,6 @@ describe Deck do
 
   it 'can draw a card from the deck' do
     2.times do
-      deck = Deck.new
       card = deck.draw
       expect(card).to be_a(Card)
     end
@@ -42,7 +36,7 @@ describe Deck do
   context "when cards have been drawn" do
     it 'reduces deck size after drawing multiple cards' do
       [1, 2, 3, 5, 10].each do |n|
-        deck = Deck.new
+
         original_size = deck.size
         n.times {deck.draw}
         expect(deck.size).to eq(original_size - n)
@@ -50,19 +44,16 @@ describe Deck do
     end
 
     it 'is empty after drawing all 52 cards' do
-      deck = Deck.new
       52.times { deck.draw }
       expect(deck.empty?).to be true
     end
 
     it 'has size 0 when empty' do
-      deck = Deck.new
       52.times { deck.draw }
       expect(deck.size).to eq(0)
     end
 
     it 'returns nil when drawing from empty deck' do
-      deck = Deck.new
       52.times { deck.draw }
       expect(deck.draw).to be_nil
     end
@@ -70,48 +61,41 @@ describe Deck do
 
   context "when shuffling the deck" do 
     it 'can shuffle the deck' do
-      deck = Deck.new
       original_order = deck.cards.dup
       deck.shuffle!
       # Very unlikely to be in same order after shuffle
       expect(deck.cards).not_to eq(original_order)
     end
     it 'shuffles and maintains deck size' do
-      deck = Deck.new
       original_size = deck.size
       deck.shuffle!
       expect(deck.size).to eq(original_size)
     end
 
     it 'maintains all cards when shuffled' do
-      deck = Deck.new
       original_cards = deck.cards.dup
       deck.shuffle!
       expect(deck.cards.sort_by(&:to_s)).to eq(original_cards.sort_by(&:to_s))
     end
     it 'can draw from shuffled deck' do
-      deck = Deck.new
       deck.shuffle!
       card = deck.draw
       expect(card).to be_a(Card)
     end
 
     it "shuffled deck reduces size when drawing" do
-      deck = Deck.new
       deck.shuffle!
       card = deck.draw
       expect(card).to be_a(Card)
     end
 
     it 'shuffled deck decreases size correctly' do
-      deck = Deck.new
       deck.shuffle!
       original_size = deck.size
       deck.draw
       expect(deck.size).to eq(original_size - 1)
     end
     it 'maintains size after multiple shuffles' do
-      deck = Deck.new
       deck.shuffle!
       deck.shuffle!
       deck.shuffle!
@@ -119,7 +103,6 @@ describe Deck do
     end
 
     it 'can be completely emptied by drawing' do
-      deck = Deck.new
       cards_drawn = []
       while !deck.empty?
         cards_drawn << deck.draw
@@ -128,7 +111,6 @@ describe Deck do
     end
 
     it 'draws exactly 52 unique cards' do
-      deck = Deck.new
       cards_drawn = []
       while !deck.empty?
         cards_drawn << deck.draw
@@ -140,7 +122,6 @@ describe Deck do
 
   context 'when deck is full' do
     it 'contains 13 cards of each suit' do
-      deck = Deck.new
       ['Hearts', 'Diamonds', 'Clubs', 'Spades'].each do |suit|
         cards = deck.cards.select { |card| card.suit == suit }
         expect(cards.length).to eq(13), "Expected 13 cards of #{suit}, got #{cards.length}"
