@@ -139,28 +139,12 @@ describe Deck do
   end
 
   context 'when deck is full' do
-    it 'contains 13 hearts cards' do
+    it 'contains 13 cards of each suit' do
       deck = Deck.new
-      hearts_cards = deck.cards.select { |card| card.suit == 'Hearts' }
-      expect(hearts_cards.length).to eq(13)
-    end
-
-    it 'contains 13 diamonds cards' do
-      deck = Deck.new
-      diamonds_cards = deck.cards.select { |card| card.suit == 'Diamonds' }
-      expect(diamonds_cards.length).to eq(13)
-    end
-
-    it 'contains 13 clubs cards' do
-      deck = Deck.new
-      clubs_cards = deck.cards.select { |card| card.suit == 'Clubs' }
-      expect(clubs_cards.length).to eq(13)
-    end
-
-    it 'contains 13 spades cards' do
-      deck = Deck.new
-      spades_cards = deck.cards.select { |card| card.suit == 'Spades' }
-      expect(spades_cards.length).to eq(13)
+      ['Hearts', 'Diamonds', 'Clubs', 'Spades'].each do |suit|
+        cards = deck.cards.select { |card| card.suit == suit }
+        expect(cards.length).to eq(13), "Expected 13 cards of #{suit}, got #{cards.length}"
+      end
     end
   end
 end
