@@ -1,28 +1,29 @@
 describe Deck do
   let(:deck) { Deck.new }
-  it 'creates a deck with 52 cards' do
-    2.times do
-      expect(deck.size).to eq(52)
-    end
-  end
 
-  it 'creates a full deck that is not empty' do
-    2.times do
-      expect(deck.empty?).to be false
+  context 'when there is a full deck' do
+    it 'creates a deck with 52 cards' do
+      2.times do
+        expect(deck.size).to eq(52)
+      end
     end
-  end
 
-  it 'has all four suits in new deck' do
-    2.times do
-      suits = deck.cards.map(&:suit).uniq.sort
-      expect(suits).to eq(['Clubs', 'Diamonds', 'Hearts', 'Spades'])
+    it 'creates a full deck that is not empty' do
+      2.times do
+        expect(deck.empty?).to be false
+      end
     end
-  end
-
-  it 'has all thirteen ranks in new deck' do
-    2.times do
-      ranks = deck.cards.map(&:rank).uniq.sort_by { |rank| Card::RANKS.index(rank) }
-      expect(ranks).to eq(['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'])
+    it 'has all four suits in new deck' do
+      2.times do
+        suits = deck.cards.map(&:suit).uniq.sort
+        expect(suits).to eq(['Clubs', 'Diamonds', 'Hearts', 'Spades'])
+      end
+    end
+    it 'has all thirteen ranks in new deck' do
+      2.times do
+        ranks = deck.cards.map(&:rank).uniq.sort_by { |rank| Card::RANKS.index(rank) }
+        expect(ranks).to eq(['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'])
+      end
     end
   end
 
@@ -33,28 +34,24 @@ describe Deck do
     end
   end
 
+  it 'reduces deck size after drawing multiple cards' do
+    [1, 2, 3, 5, 10].each do |n|
+
+      original_size = deck.size
+      n.times {deck.draw}
+      expect(deck.size).to eq(original_size - n)
+    end
+  end
+
   context "when cards have been drawn" do
-    it 'reduces deck size after drawing multiple cards' do
-      [1, 2, 3, 5, 10].each do |n|
-
-        original_size = deck.size
-        n.times {deck.draw}
-        expect(deck.size).to eq(original_size - n)
-      end
+    before(:each) do
+      52.times { deck.draw }
     end
-
     it 'is empty after drawing all 52 cards' do
-      52.times { deck.draw }
       expect(deck.empty?).to be true
-    end
-
-    it 'has size 0 when empty' do
-      52.times { deck.draw }
       expect(deck.size).to eq(0)
     end
-
     it 'returns nil when drawing from empty deck' do
-      52.times { deck.draw }
       expect(deck.draw).to be_nil
     end
   end
@@ -82,14 +79,7 @@ describe Deck do
       card = deck.draw
       expect(card).to be_a(Card)
     end
-
-    it "shuffled deck reduces size when drawing" do
-      deck.shuffle!
-      card = deck.draw
-      expect(card).to be_a(Card)
-    end
-
-    it 'shuffled deck decreases size correctly' do
+    it 'shuffled deck reduces size when drawing' do
       deck.shuffle!
       original_size = deck.size
       deck.draw
