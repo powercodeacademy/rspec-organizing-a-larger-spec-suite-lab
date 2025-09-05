@@ -2,24 +2,20 @@ describe Deck do
   let(:deck) { Deck.new }
 
   context 'when there is a full deck' do
-    it 'creates a deck with 52 cards' do
+
+    it 'creates a full deck of 52 cards that is not empty multiple times' do
       2.times do
         expect(deck.size).to eq(52)
-      end
-    end
-
-    it 'creates a full deck that is not empty' do
-      2.times do
         expect(deck.empty?).to be false
       end
     end
-    it 'has all four suits in new deck' do
+    it 'has all four suits in new deck multiple times' do
       2.times do
         suits = deck.cards.map(&:suit).uniq.sort
         expect(suits).to eq(['Clubs', 'Diamonds', 'Hearts', 'Spades'])
       end
     end
-    it 'has all thirteen ranks in new deck' do
+    it 'has all thirteen ranks in new deck multiple times' do
       2.times do
         ranks = deck.cards.map(&:rank).uniq.sort_by { |rank| Card::RANKS.index(rank) }
         expect(ranks).to eq(['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'])
@@ -27,23 +23,24 @@ describe Deck do
     end
   end
 
-  it 'can draw a card from the deck' do
-    2.times do
-      card = deck.draw
-      expect(card).to be_a(Card)
+  context 'when a card is removed from the deck' do
+    it 'can draw a card from the deck multiple times' do
+        2.times do
+          card = deck.draw
+          expect(card).to be_a(Card)
+        end
+    end
+    it 'reduces deck size after drawing multiple cards' do
+      [1, 2, 3, 5, 10].each do |n|
+
+        original_size = deck.size
+        n.times {deck.draw}
+        expect(deck.size).to eq(original_size - n)
+      end
     end
   end
 
-  it 'reduces deck size after drawing multiple cards' do
-    [1, 2, 3, 5, 10].each do |n|
-
-      original_size = deck.size
-      n.times {deck.draw}
-      expect(deck.size).to eq(original_size - n)
-    end
-  end
-
-  context "when cards have been drawn" do
+  context "when all 52 cards from the deck have been drawn" do
     before(:each) do
       52.times { deck.draw }
     end
