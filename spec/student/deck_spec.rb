@@ -95,20 +95,22 @@ describe Deck do
         expect(deck.size).to eq(52)
       end
     end
+  end
+
+  context 'when the deck is completely drawn' do
+    let(:cards_drawn) do
+      drawn = []
+      while !deck.empty?
+        drawn << deck.draw
+      end
+      drawn
+    end
 
     it 'can be completely emptied by drawing' do
-      cards_drawn = []
-      while !deck.empty?
-        cards_drawn << deck.draw
-      end
       expect(cards_drawn.length).to eq(52)
     end
 
     it 'draws exactly 52 unique cards' do
-      cards_drawn = []
-      while !deck.empty?
-        cards_drawn << deck.draw
-      end
       expect(cards_drawn.uniq.length).to eq(52)
     end
   end
