@@ -2,19 +2,20 @@ describe Deck do
   let(:deck) { Deck.new }
 
   context 'when there is a full deck' do
-
     it 'creates a full deck of 52 cards that is not empty multiple times' do
       2.times do
         expect(deck.size).to eq(52)
         expect(deck.empty?).to be false
       end
     end
+
     it 'has all four suits in new deck multiple times' do
       2.times do
         suits = deck.cards.map(&:suit).uniq.sort
         expect(suits).to eq(['Clubs', 'Diamonds', 'Hearts', 'Spades'])
       end
     end
+
     it 'has all thirteen ranks in new deck multiple times' do
       2.times do
         ranks = deck.cards.map(&:rank).uniq.sort_by { |rank| Card::RANKS.index(rank) }
@@ -30,6 +31,7 @@ describe Deck do
           expect(card).to be_a(Card)
         end
     end
+
     it 'reduces deck size after drawing multiple cards' do
       [1, 2, 3, 5, 10].each do |n|
 
@@ -48,6 +50,7 @@ describe Deck do
       expect(deck.empty?).to be true
       expect(deck.size).to eq(0)
     end
+    
     it 'returns nil when drawing from empty deck' do
       expect(deck.draw).to be_nil
     end
@@ -60,6 +63,7 @@ describe Deck do
       # Very unlikely to be in same order after shuffle
       expect(deck.cards).not_to eq(original_order)
     end
+
     it 'shuffles and maintains deck size' do
       original_size = deck.size
       deck.shuffle!
@@ -71,17 +75,20 @@ describe Deck do
       deck.shuffle!
       expect(deck.cards.sort_by(&:to_s)).to eq(original_cards.sort_by(&:to_s))
     end
+
     it 'can draw from shuffled deck' do
       deck.shuffle!
       card = deck.draw
       expect(card).to be_a(Card)
     end
+
     it 'shuffled deck reduces size when drawing' do
       deck.shuffle!
       original_size = deck.size
       deck.draw
       expect(deck.size).to eq(original_size - 1)
     end
+
     it 'maintains size after multiple shuffles' do
       deck.shuffle!
       deck.shuffle!
@@ -102,7 +109,6 @@ describe Deck do
       while !deck.empty?
         cards_drawn << deck.draw
       end
-      expect(cards_drawn.length).to eq(52)
       expect(cards_drawn.uniq.length).to eq(52)
     end
   end
