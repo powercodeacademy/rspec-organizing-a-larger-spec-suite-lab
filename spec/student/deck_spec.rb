@@ -50,7 +50,7 @@ describe Deck do
       expect(deck.empty?).to be true
       expect(deck.size).to eq(0)
     end
-    
+
     it 'returns nil when drawing from empty deck' do
       expect(deck.draw).to be_nil
     end
@@ -90,10 +90,10 @@ describe Deck do
     end
 
     it 'maintains size after multiple shuffles' do
-      deck.shuffle!
-      deck.shuffle!
-      deck.shuffle!
-      expect(deck.size).to eq(52)
+      3.times do
+        deck.shuffle!
+        expect(deck.size).to eq(52)
+      end
     end
 
     it 'can be completely emptied by drawing' do
